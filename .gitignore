@@ -1,0 +1,7 @@
+# dependencies
+/app/node_modules
+/api/node_modules
+
+# env
+/app/.env
+/api/.env
