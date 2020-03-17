@@ -13,6 +13,7 @@ export const GET_CARDS = gql`
       description
       id
       color
+      done
     }
   }
 `
@@ -20,24 +21,32 @@ export const GET_CARDS = gql`
 export default () => {
   const { error, data } = useQuery(GET_CARDS)
   error && console.log(error)
-  // data && console.log(data[])
+
+  const compare = (a, b) => {
+    const dA = a.done
+    const dB = b.done
+
+    let c = 0
+
+    if (dA === true && dB === false) c = 1
+    else c = -1
+
+    return c
+  }
+
+  data && console.log(data)
 
   return (
     <Wrapper>
       <List>
-        {data && data.cards.map((card, i) => 
-          <Card 
-            key={i} 
-            id={card.id}
-            color={card.color}
-          > 
-            {card.description} 
-          </Card>) 
-        }
+        {data &&
+          data.cards.sort(compare).map((card, i) => (
+            <Card key={i} id={card.id} color={card.color} done={card.done}>
+              {card.description}
+            </Card>
+          ))}
       </List>
-      <Form>
-
-      </Form>
+      <Form />
     </Wrapper>
   )
 }
@@ -48,4 +57,3 @@ const Wrapper = styled.div`
   ${direction()};
   ${alignment()};
 `
-
