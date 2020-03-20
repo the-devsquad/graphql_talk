@@ -14,12 +14,10 @@ export default {
 
     deleteCard: async (parent, { id }) => {
       const res = await Card.deleteOne({ _id: id })
-      console.log(res)
     },
 
     doneCard: async (parent, { id }) => {
       const res = await Card.updateOne({ _id: id }, { $set: { done: true } })
-      console.log(res)
     }
   }
 }
